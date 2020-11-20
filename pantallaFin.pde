@@ -25,6 +25,7 @@ class pantallaFin {
 } 
 boolean click(){
   if(dist(x,y+200, mouseX, mouseY)<radio){
+    estado=0;
     return true;
   } else {
     return false; 

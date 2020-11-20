@@ -1,14 +1,17 @@
 class Juego {
   Meteorito [] arregloDeMeteoritos;
-  int cantMeteoritos = 6;
+  int cantMeteoritos = 8;
   int estado = 1;
+  int tiempo;
+  boolean jugando;
   Nave miNave;
-  pantallaIncial inicio;
   pantallaFin perdiste;
 
   Juego() {
+    
+    
     miNave = new Nave();
-    inicio = new pantallaIncial();
+   
     perdiste = new pantallaFin();
     arregloDeMeteoritos = new Meteorito[cantMeteoritos];
     for ( int i=0; i<cantMeteoritos; i++ ) {
@@ -17,14 +20,20 @@ class Juego {
   }
 
   void draw() {
-    if ( estado==1) {
-      inicio.dibujar();
-    } else if (estado==2) {
+    
+     
+    if (estado==2) {
+      fill(0, 20, 255, 200);
+        
+        fill(255);
+        text("tiempo:" + tiempo, 125, 25);
+      timer();
       miNave.draw();
       for ( int i=0; i<cantMeteoritos; i++ ) {
         arregloDeMeteoritos[i].draw();
         if ( arregloDeMeteoritos[i].colision( miNave.getX(), 
           miNave.getY(), miNave.getRadio() ) ) {
+            bum.play();
           cambiarAEstado(3);
         }
       }
@@ -43,12 +52,10 @@ class Juego {
   }
 
   void mousePressed() {
-    if (inicio.click() && estado == 1) {
+   
       cambiarAEstado(2);
-    } 
-    if (perdiste.click() && estado ==3) {
-      estado = 1;
-    }
+    
+    
   }
 
   void cambiarAEstado( int nuevoEstado_ ) {
@@ -62,4 +69,16 @@ class Juego {
       }
     }
   }
+ void timer(){
+ if(frameCount%60==0){
+   tiempo++;
+ }
+if(tiempo>=25){
+aventura.cambiarEstado(estado=5);
+}
+}
+void actualizar(){
+
+tiempo=0;
+}
 }
